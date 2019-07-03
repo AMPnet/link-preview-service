@@ -5,7 +5,7 @@ plugins {
 }
 
 group = "com.ampnet"
-version = "0.0.1"
+version = "0.0.2"
 
 repositories {
     jcenter()
@@ -18,6 +18,7 @@ dependencies {
     implementation("io.ktor:ktor-server-netty:$ktorVersion")
     implementation("io.ktor:ktor-gson:$ktorVersion")
     implementation("net.sourceforge.htmlcleaner:htmlcleaner:2.16")
+    implementation("org.apache.commons:commons-text:1.6")
     compile("ch.qos.logback:logback-classic:1.2.3")
 
     // Use the Kotlin test library.

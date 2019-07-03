@@ -17,6 +17,7 @@ import io.ktor.routing.get
 import io.ktor.routing.routing
 import io.ktor.server.engine.embeddedServer
 import io.ktor.server.netty.Netty
+import org.apache.commons.text.StringEscapeUtils
 
 fun main() {
     val server = embeddedServer(Netty, port = 8126) {
@@ -55,9 +56,9 @@ fun main() {
 
 private fun getSitePreviewResponse(siteUrl: String): PreviewResponse {
     val site = OpenGraph(siteUrl, true)
-    val title = site.getContent("title").orEmpty()
+    val title = site.getContent("title")?.convertHtmlToUtf8().orEmpty()
     val url = site.getContent("url").orEmpty()
-    val description = site.getContent("description").orEmpty()
+    val description = site.getContent("description")?.convertHtmlToUtf8().orEmpty()
 
     val image = site.getContent("image").orEmpty()
     val imageHeight = site.getContent("image:width").orEmpty()
@@ -65,3 +66,5 @@ private fun getSitePreviewResponse(siteUrl: String): PreviewResponse {
     val imageResponse = ImagePreviewResponse(image, imageHeight, imageWidth)
     return PreviewResponse(title, description, imageResponse, url)
 }
+
+fun String.convertHtmlToUtf8(): String = StringEscapeUtils.unescapeHtml4(this)
