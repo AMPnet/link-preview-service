@@ -6,8 +6,10 @@ import com.ampnet.response.ImagePreviewResponse
 import com.ampnet.response.PreviewResponse
 import io.ktor.application.call
 import io.ktor.application.install
+import io.ktor.features.CORS
 import io.ktor.features.ContentNegotiation
 import io.ktor.gson.gson
+import io.ktor.http.HttpMethod
 import io.ktor.http.HttpStatusCode
 import io.ktor.http.Parameters
 import io.ktor.response.respond
@@ -22,6 +24,10 @@ fun main() {
             gson {
                 setPrettyPrinting()
             }
+        }
+        install(CORS) {
+            method(HttpMethod.Get)
+            anyHost()
         }
         val cache = Cache()
         routing {
