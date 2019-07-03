@@ -1,6 +1,9 @@
 package com.ampnet
 
 import com.ampnet.graph.OpenGraph
+import com.ampnet.response.HealthResponse
+import com.ampnet.response.ImagePreviewResponse
+import com.ampnet.response.PreviewResponse
 import io.ktor.application.call
 import io.ktor.application.install
 import io.ktor.features.ContentNegotiation
@@ -8,14 +11,13 @@ import io.ktor.gson.gson
 import io.ktor.http.HttpStatusCode
 import io.ktor.http.Parameters
 import io.ktor.response.respond
-import io.ktor.response.respondText
 import io.ktor.routing.get
 import io.ktor.routing.routing
 import io.ktor.server.engine.embeddedServer
 import io.ktor.server.netty.Netty
 
 fun main() {
-    val server = embeddedServer(Netty, port = 8200) {
+    val server = embeddedServer(Netty, port = 8126) {
         install(ContentNegotiation) {
             gson {
                 setPrettyPrinting()
@@ -38,7 +40,7 @@ fun main() {
                 call.respond(response)
             }
             get("/health") {
-                call.respondText("OK")
+                call.respond(HealthResponse("OK"))
             }
         }
     }

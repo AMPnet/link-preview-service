@@ -1,5 +1,7 @@
 package com.ampnet
 
+import com.ampnet.response.PreviewResponse
+
 class Cache {
 
     private val map = HashMap<String, PreviewResponse>()
