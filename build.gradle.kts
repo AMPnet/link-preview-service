@@ -20,7 +20,7 @@ dependencies {
     implementation("io.ktor:ktor-gson:$ktorVersion")
     implementation("net.sourceforge.htmlcleaner:htmlcleaner:2.23")
     implementation("org.apache.commons:commons-text:1.8")
-    compile("ch.qos.logback:logback-classic:1.2.3")
+    implementation("ch.qos.logback:logback-classic:1.2.3")
 
     // Use the Kotlin test library.
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit")
