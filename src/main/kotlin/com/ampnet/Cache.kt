@@ -1,16 +1,17 @@
 package com.ampnet
 
 import com.ampnet.response.PreviewResponse
+import java.lang.ref.SoftReference
 
 class Cache {
 
-    private val map = HashMap<String, PreviewResponse>()
+    private val map = HashMap<String, SoftReference<PreviewResponse>>()
 
     fun set(siteUrl: String, previewResponse: PreviewResponse) {
-        map[siteUrl] = previewResponse
+        map[siteUrl] = SoftReference(previewResponse)
     }
 
     fun get(siteUrl: String): PreviewResponse? {
-        return map[siteUrl]
+        return map[siteUrl]?.get()
     }
 }
