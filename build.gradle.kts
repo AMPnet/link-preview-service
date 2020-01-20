@@ -1,11 +1,11 @@
 plugins {
-    id("org.jetbrains.kotlin.jvm").version("1.3.50")
-    id("com.google.cloud.tools.jib") version "1.7.0"
+    id("org.jetbrains.kotlin.jvm").version("1.3.61")
+    id("com.google.cloud.tools.jib") version "1.8.0"
     application
 }
 
 group = "com.ampnet"
-version = "0.0.4"
+version = "0.0.5"
 
 repositories {
     mavenCentral()
@@ -13,7 +13,7 @@ repositories {
 }
 
 dependencies {
-    val ktorVersion = "1.2.5"
+    val ktorVersion = "1.3.0"
     // Use the Kotlin JDK 8 standard library.
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
     implementation("io.ktor:ktor-server-netty:$ktorVersion")
