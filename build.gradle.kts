@@ -1,13 +1,13 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    id("org.jetbrains.kotlin.jvm").version("1.3.70")
+    id("org.jetbrains.kotlin.jvm").version("1.3.72")
     id("com.google.cloud.tools.jib") version "2.1.0"
     application
 }
 
 group = "com.ampnet"
-version = "0.0.6"
+version = "0.0.7"
 java.sourceCompatibility = JavaVersion.VERSION_1_8
 
 repositories {
