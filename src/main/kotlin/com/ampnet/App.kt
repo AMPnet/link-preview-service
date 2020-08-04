@@ -42,9 +42,13 @@ fun main() {
                     return@get call.respond(it)
                 }
 
-                val response = getSitePreviewResponse(siteUrl)
-                cache.set(siteUrl, response)
-                call.respond(response)
+                try {
+                    val response = getSitePreviewResponse(siteUrl)
+                    cache.set(siteUrl, response)
+                    call.respond(response)
+                } catch (exception: Exception) {
+                    call.respond(HttpStatusCode.UnprocessableEntity, exception.localizedMessage)
+                }
             }
             get("/health") {
                 call.respond(HealthResponse("OK"))
