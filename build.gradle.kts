@@ -1,13 +1,13 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    id("org.jetbrains.kotlin.jvm").version("1.3.72")
-    id("com.google.cloud.tools.jib") version "2.1.0"
+    id("org.jetbrains.kotlin.jvm").version("1.4.10")
+    id("com.google.cloud.tools.jib") version "2.5.0"
     application
 }
 
 group = "com.ampnet"
-version = "0.0.8"
+version = "0.1.0"
 java.sourceCompatibility = JavaVersion.VERSION_1_8
 
 repositories {
@@ -16,13 +16,13 @@ repositories {
 }
 
 dependencies {
-    val ktorVersion = "1.3.2"
+    val ktorVersion = "1.4.0"
     // Use the Kotlin JDK 8 standard library.
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
     implementation("io.ktor:ktor-server-netty:$ktorVersion")
     implementation("io.ktor:ktor-gson:$ktorVersion")
-    implementation("net.sourceforge.htmlcleaner:htmlcleaner:2.23")
-    implementation("org.apache.commons:commons-text:1.8")
+    implementation("net.sourceforge.htmlcleaner:htmlcleaner:2.24")
+    implementation("org.apache.commons:commons-text:1.9")
     implementation("ch.qos.logback:logback-classic:1.2.3")
 
     // Use the Kotlin test library.
