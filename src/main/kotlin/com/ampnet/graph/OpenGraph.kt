@@ -76,6 +76,9 @@ class OpenGraph
         // download the (X)HTML content, but only up to the closing head tag. We do not want to waste resources parsing irrelevant content
         val pageURL = URL(url)
         val siteConnection = pageURL.openConnection()
+        siteConnection.connectTimeout = 5000;
+        siteConnection.readTimeout = 5000;
+        siteConnection.setRequestProperty("User-Agent", "Mozilla/5.0")
         val charset = getConnectionCharset(siteConnection)
         val dis = BufferedReader(InputStreamReader(siteConnection.getInputStream(), charset))
         val headContents = StringBuffer()

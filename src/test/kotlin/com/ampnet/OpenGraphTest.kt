@@ -3,15 +3,29 @@ package com.ampnet
 import com.ampnet.graph.OpenGraph
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertTrue
 
 class OpenGraphTest {
     @Test
     fun mustGetOpenGraphDataFromSite() {
-        val site = OpenGraph("https://www.tportal.hr/kultura/clanak/janekovic-dabac-pavic-najbolje-od-hrvatske-fotografije-20-stoljeca-na-izlozbi-u-moskvi-foto-20190626", true)
-        assertEquals("Janeković, Dabac, Pavić: Najbolje od hrvatske fotografije 20. stoljeća na izložbi u Moskvi", site.getContent("title"))
-        assertEquals("'Klasici hrvatske fotografije' naziv je izložbe zagrebačkog Muzeja za umjetnost i obrt (MUO) koja se 27. lipnja otvara u Multimedijskom umjetničkom muzeju u Moskvi i predstavlja izbor najboljih radova nekih od ključnih ličnosti hrvatske fotografije dvades", site.getContent("description"))
-        assertEquals("https://www.tportal.hr/media/thumbnail/800x600/1016455.jpeg?cropId=958038", site.getContent("image"))
-        assertEquals("800", site.getContent("image:width"))
-        assertEquals("600", site.getContent("image:height"))
+        val site = OpenGraph(
+            "https://super1.telegram.hr/relax/u-zagrebu-se-otvara-najveci-coworking-prostor-u-ovom-dijelu-europe-evo-kako-ce-izgledati-impresivni-kompleks/",
+            true
+        )
+        assertEquals(
+            "U Zagrebu se otvara najveći coworking prostor u ovom dijelu Europe. Ovako će izgledati",
+            site.getContent("title")
+        )
+        assertTrue(
+            site.getContent("description")
+                ?.startsWith("Wespa Spaces su moderno-industrijski uredi za digitalno doba.")
+                ?: false
+        )
+        assertEquals(
+            "https://super1.telegram.hr/wp-content/uploads/sites/3/2020/09/2020_9_16_naslovna4.jpg",
+            site.getContent("image")
+        )
+        assertEquals("1200", site.getContent("image:width"))
+        assertEquals("709", site.getContent("image:height"))
     }
 }
