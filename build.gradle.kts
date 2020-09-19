@@ -7,7 +7,7 @@ plugins {
 }
 
 group = "com.ampnet"
-version = "0.1.0"
+version = "0.1.1"
 java.sourceCompatibility = JavaVersion.VERSION_1_8
 
 repositories {
@@ -58,17 +58,9 @@ jib {
     container {
         mainClass = main_class
         creationTime = "USE_CURRENT_TIMESTAMP"
-
-        // good defaults intended for Java 8 (>= 8u191) containers
-        jvmFlags = listOf(
-                "-server",
-                "-Djava.awt.headless=true",
-                "-Dfile.encoding=UTF8",
-                "-XX:InitialRAMFraction=2",
-                "-XX:MinRAMFraction=2",
-                "-XX:MaxRAMFraction=2",
-                "-XX:MaxGCPauseMillis=100",
-                "-XX:+UseStringDeduplication"
+        jvmFlags = listOf("-Xmx64m", "-XX:MaxMetaspaceSize=64m", "-XX:+UseSerialGC",
+            "-XX:+UnlockExperimentalVMOptions", "-XX:+UseCGroupMemoryLimitForHeap",
+            "-XX:MinHeapFreeRatio=20", "-XX:MaxHeapFreeRatio=40"
         )
     }
 }
