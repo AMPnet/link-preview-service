@@ -12,9 +12,10 @@ class OpenGraphTest {
             "https://super1.telegram.hr/relax/u-zagrebu-se-otvara-najveci-coworking-prostor-u-ovom-dijelu-europe-evo-kako-ce-izgledati-impresivni-kompleks/",
             true
         )
-        assertEquals(
-            "U Zagrebu se otvara najveći coworking prostor u ovom dijelu Europe. Ovako će izgledati",
+        assertTrue(
             site.getContent("title")
+                ?.startsWith("U Zagrebu se otvara najveći coworking prostor u ovom dijelu Europe.")
+                ?: false
         )
         assertTrue(
             site.getContent("description")
