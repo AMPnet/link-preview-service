@@ -47,7 +47,8 @@ fun main() {
                     cache.set(siteUrl, response)
                     call.respond(response)
                 } catch (exception: Exception) {
-                    call.respond(HttpStatusCode.UnprocessableEntity, exception.localizedMessage)
+                    val response = PreviewResponse(siteUrl)
+                    call.respond(response)
                 }
             }
             get("/health") {
@@ -60,15 +61,14 @@ fun main() {
 
 private fun getSitePreviewResponse(siteUrl: String): PreviewResponse {
     val site = OpenGraph(siteUrl, true)
-    val title = site.getContent("title")?.convertHtmlToUtf8().orEmpty()
-    val url = site.getContent("url").orEmpty()
-    val description = site.getContent("description")?.convertHtmlToUtf8().orEmpty()
+    val title = site.getContent("title")?.convertHtmlToUtf8()
+    val description = site.getContent("description")?.convertHtmlToUtf8()
 
-    val image = site.getContent("image").orEmpty()
-    val imageHeight = site.getContent("image:width").orEmpty()
-    val imageWidth = site.getContent("image:height").orEmpty()
+    val image = site.getContent("image")
+    val imageHeight = site.getContent("image:width")
+    val imageWidth = site.getContent("image:height")
     val imageResponse = ImagePreviewResponse(image, imageHeight, imageWidth)
-    return PreviewResponse(title, description, imageResponse, url)
+    return PreviewResponse(siteUrl, title, description, imageResponse)
 }
 
 fun String.convertHtmlToUtf8(): String = StringEscapeUtils.unescapeHtml4(this)

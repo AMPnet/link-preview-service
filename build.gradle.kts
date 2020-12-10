@@ -7,7 +7,7 @@ plugins {
 }
 
 group = "com.ampnet"
-version = "0.1.1"
+version = "0.1.2"
 java.sourceCompatibility = JavaVersion.VERSION_1_8
 
 repositories {
@@ -63,4 +63,12 @@ jib {
             "-XX:MinHeapFreeRatio=20", "-XX:MaxHeapFreeRatio=40"
         )
     }
+}
+val compileKotlin: KotlinCompile by tasks
+compileKotlin.kotlinOptions {
+    jvmTarget = "1.8"
+}
+val compileTestKotlin: KotlinCompile by tasks
+compileTestKotlin.kotlinOptions {
+    jvmTarget = "1.8"
 }
