@@ -3,7 +3,9 @@ package com.ampnet
 import com.ampnet.graph.OpenGraph
 import com.ampnet.response.HealthResponse
 import com.ampnet.response.ImagePreviewResponse
+import com.ampnet.response.OpenGraphResponse
 import com.ampnet.response.PreviewResponse
+import com.google.gson.FieldNamingPolicy
 import io.ktor.application.call
 import io.ktor.application.install
 import io.ktor.features.CORS
@@ -24,6 +26,8 @@ fun main() {
         install(ContentNegotiation) {
             gson {
                 setPrettyPrinting()
+                serializeNulls()
+                setFieldNamingStrategy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
             }
         }
         install(CORS) {
@@ -68,7 +72,8 @@ private fun getSitePreviewResponse(siteUrl: String): PreviewResponse {
     val imageHeight = site.getContent("image:width")
     val imageWidth = site.getContent("image:height")
     val imageResponse = ImagePreviewResponse(image, imageHeight, imageWidth)
-    return PreviewResponse(siteUrl, title, description, imageResponse)
+    val openGraphResponse = OpenGraphResponse(title, description, imageResponse)
+    return PreviewResponse(siteUrl, openGraphResponse)
 }
 
 fun String.convertHtmlToUtf8(): String = StringEscapeUtils.unescapeHtml4(this)
