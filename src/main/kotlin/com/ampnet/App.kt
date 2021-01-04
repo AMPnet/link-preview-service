@@ -9,11 +9,15 @@ import com.google.gson.FieldNamingPolicy
 import io.ktor.application.call
 import io.ktor.application.install
 import io.ktor.features.CORS
+import io.ktor.features.CachingHeaders
 import io.ktor.features.ContentNegotiation
 import io.ktor.gson.gson
+import io.ktor.http.CacheControl
+import io.ktor.http.HttpHeaders
 import io.ktor.http.HttpMethod
 import io.ktor.http.HttpStatusCode
 import io.ktor.http.Parameters
+import io.ktor.http.content.CachingOptions
 import io.ktor.response.respond
 import io.ktor.routing.get
 import io.ktor.routing.routing
@@ -34,28 +38,41 @@ fun main() {
             method(HttpMethod.Get)
             anyHost()
         }
+        install(CachingHeaders) {
+            options {
+                CachingOptions(CacheControl.MaxAge(maxAgeSeconds = 3600))
+            }
+        }
+
         val cache = Cache()
         routing {
             get("/preview") {
                 val queryParameters: Parameters = call.request.queryParameters
                 val siteUrl: String? = queryParameters["url"]
+                call.application.environment.log.info("Received request for url=$siteUrl")
                 if (siteUrl.isNullOrEmpty()) {
+                    call.application.environment.log.info("Missing query parameter `url`")
                     return@get call.respond(HttpStatusCode.BadRequest)
                 }
                 cache.get(siteUrl)?.let {
+                    call.application.environment.log.debug("Returning data from cache")
                     return@get call.respond(it)
                 }
 
                 try {
                     val response = getSitePreviewResponse(siteUrl)
                     cache.set(siteUrl, response)
+                    call.application.environment.log.info("Site data = $response")
                     call.respond(response)
                 } catch (exception: Exception) {
+                    call.application.environment.log.warn("Could not extract site data", exception)
                     val response = PreviewResponse(siteUrl)
+                    call.response.headers.append(HttpHeaders.CacheControl, "no-cache, no-store")
                     call.respond(response)
                 }
             }
             get("/health") {
+                call.response.headers.append(HttpHeaders.CacheControl, "no-cache, no-store")
                 call.respond(HealthResponse("OK"))
             }
         }

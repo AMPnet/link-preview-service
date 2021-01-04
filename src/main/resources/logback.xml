@@ -26,7 +26,7 @@
         </rollingPolicy>
     </appender>
 
-    <logger name="com.ampnet" level="DEBUG" />
+    <logger name="ktor.application" level="DEBUG" />
 
     <root level="INFO">
         <appender-ref ref="CONSOLE" />
