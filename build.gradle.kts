@@ -1,13 +1,13 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    id("org.jetbrains.kotlin.jvm").version("1.4.10")
-    id("com.google.cloud.tools.jib") version "2.5.0"
+    id("org.jetbrains.kotlin.jvm").version("1.4.21")
+    id("com.google.cloud.tools.jib") version "2.7.1"
     application
 }
 
 group = "com.ampnet"
-version = "0.1.3"
+version = "0.1.4"
 java.sourceCompatibility = JavaVersion.VERSION_1_8
 
 repositories {
@@ -16,7 +16,7 @@ repositories {
 }
 
 dependencies {
-    val ktorVersion = "1.4.0"
+    val ktorVersion = "1.5.1"
     // Use the Kotlin JDK 8 standard library.
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
     implementation("io.ktor:ktor-server-netty:$ktorVersion")
