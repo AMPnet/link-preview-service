@@ -85,9 +85,9 @@ private fun getSitePreviewResponse(siteUrl: String): PreviewResponse {
     val title = site.getContent("title")?.convertHtmlToUtf8()
     val description = site.getContent("description")?.convertHtmlToUtf8()
 
-    val image = site.getContent("image")
-    val imageHeight = site.getContent("image:width")
-    val imageWidth = site.getContent("image:height")
+    val image = site.getContent("image")?.convertHtmlToUtf8()
+    val imageHeight = site.getContent("image:width")?.convertHtmlToUtf8()
+    val imageWidth = site.getContent("image:height")?.convertHtmlToUtf8()
     val imageResponse = ImagePreviewResponse(image, imageHeight, imageWidth)
     val openGraphResponse = OpenGraphResponse(title, description, imageResponse)
     return PreviewResponse(siteUrl, openGraphResponse)
